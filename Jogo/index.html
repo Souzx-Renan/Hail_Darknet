@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hail Darknet</title>
+    <style>
+      #musicOverlay {
+        background-image: url('imgs/20250516_201359_489\ \(1\).png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      
+      #musicOverlay > div {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 30px;
+        border-radius: 10px;
+        border: 2px solid var(--text-highlight);
+        max-width: 80%;
+      }
+      #musicOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        color: white;
+        text-align: center;
+        font-family: 'Cinzel', serif;
+      }
+      
+      #musicOverlay button {
+        padding: 12px 30px;
+        font-size: 20px;
+        background-color: #5a2a2a;
+        color: var(--text-highlight);
+        border: 2px solid var(--text-highlight);
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Cinzel', serif;
+        margin-top: 20px;
+        transition: all 0.3s;
+      }
+      
+      #musicOverlay button:hover {
+        background-color: var(--text-highlight);
+        color: #5a2a2a;
+        transform: scale(1.05);
+      }
+      
+      #musicOverlay h2 {
+        color: var(--text-highlight);
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      
+      #musicOverlay p {
+        font-size: 16px;
+        max-width: 500px;
+        margin: 0 auto 20px;
+        line-height: 1.6;
+      }
+
+      .music-controls {
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid var(--card-border);
+      }
+
+      .music-btn {
+        background: none;
+        border: none;
+        color: var(--text-highlight);
+        cursor: pointer;
+        font-size: 18px;
+        transition: transform 0.2s;
+      }
+      
+      .music-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .volume-control {
+        width: 90px;
+      }
+      
+      :root {
+        --dark-bg: #0a0a0a;
+        --darker-bg: #050505;
+        --card-bg: #1a1a1a;
+        --card-border: #5a2a2a;
+        --text-main: #e0e0e0;
+        --text-highlight: #d4af37;
+        --text-danger: #ff5555;
+        --text-heal: #55ff55;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Cinzel", "Times New Roman", serif;
+        background-color: var(--dark-bg);
+        color: var(--text-main);
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        font-size: 13px;
+      }
+
+      /* Painel de Narrativa */
+      .narrative-panel {
+        width: 250px;
+        height: 100%;
+        background-color: rgba(10, 10, 10, 0.85);
+        border-right: 2px solid var(--card-border);
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        z-index: 2;
+      }
+
+      .story-title {
+        color: var(--text-highlight);
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 18px;
+        border-bottom: 1px solid var(--card-border);
+        padding-bottom: 8px;
+        letter-spacing: 1px;
+      }
+
+      .story-content {
+        flex-grow: 1;
+        margin-bottom: 15px;
+        line-height: 1.5;
+        font-size: 13px;
+      }
+
+      .dialogue {
+        font-style: italic;
+        color: var(--text-highlight);
+        margin: 8px 0;
+        padding-left: 8px;
+        border-left: 2px solid var(--card-border);
+        font-size: 12px;
+      }
+
+      .battle-log {
+        border-top: 1px solid var(--card-border);
+        padding-top: 8px;
+        font-size: 12px;
+      }
+
+      .log-entry {
+        margin-bottom: 6px;
+        animation: fadeIn 0.5s;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Área Principal do Jogo */
+      .game-area {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        position: relative;
+        overflow-y: auto;
+        background-image: url('imgs/20250516_201359_489\ \(1\).png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        z-index: 1;
+      }
+
+      .game-area::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: -1;
+      }
+
+      /* Área de Seleção de Cartas */
+      .selection-phase {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .selection-title {
+        color: var(--text-highlight);
+        margin-bottom: 20px;
+        font-size: 22px;
+        text-align: center;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+      }
+
+      .card-pool {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        max-width: 850px;
+      }
+
+      /* Área de Batalha */
+      .battle-phase {
+        display: none;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .battlefield {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
+        min-height: 0;
+      }
+
+      .player-side,
+      .enemy-side {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .side-title {
+        color: var(--text-highlight);
+        margin: 8px 0;
+        font-size: 16px;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+      }
+
+      .card-slots {
+        display: flex;
+        gap: 12px;
+        margin: 10px 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* Cartas - Template melhorado */
+      .card {
+        width: 120px;
+        height: 200px;
+        background-color: var(--card-bg);
+        border: 2px solid var(--card-border);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.7);
+      }
+
+      .card.selected {
+        border-color: var(--text-highlight);
+        box-shadow: 0 0 15px var(--text-highlight);
+        transform: translateY(-5px);
+      }
+
+      .card-boss {
+        border-color: var(--text-danger);
+        box-shadow: 0 0 20px var(--text-danger);
+      }
+
+      .card-name {
+        padding: 6px 4px;
+        text-align: center;
+        font-weight: bold;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+        border-bottom: 1px solid var(--card-border);
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--text-highlight);
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+        z-index: 2;
+      }
+
+      .card-art {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card-art img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.3s;
+      }
+
+      .card:hover .card-art img {
+        transform: scale(1.05);
+      }
+
+      .card-art::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.8) 100%);
+      }
+
+      .card-stats {
+        display: flex;
+        justify-content: space-around;
+        padding: 6px 4px;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+        border-top: 1px solid var(--card-border);
+        font-size: 11px;
+        z-index: 2;
+      }
+
+      .stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 30px;
+      }
+
+      .stat-value {
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 2px;
+      }
+
+      .shield-stat .stat-value {
+        color: #66ccff;
+        text-shadow: 0 0 5px rgba(102, 204, 255, 0.5);
+      }
+
+      .health-stat .stat-value {
+        color: #55ff55;
+        text-shadow: 0 0 5px rgba(85, 255, 85, 0.5);
+      }
+
+      .attack-stat .stat-value {
+        color: #ff5555;
+        text-shadow: 0 0 5px rgba(255, 85, 85, 0.5);
+      }
+
+      .stat-name {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: rgba(255,255,255,0.7);
+      }
+
+      .card-ability {
+        padding: 4px;
+        font-size: 10px;
+        text-align: center;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+        border-top: 1px solid var(--card-border);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--text-highlight);
+        z-index: 2;
+      }
+
+      /* Botões */
+      .button {
+        padding: 10px 20px;
+        background: linear-gradient(to bottom, #5a2a2a, #3a1a1a);
+        color: var(--text-highlight);
+        border: none;
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 15px;
+        white-space: nowrap;
+        letter-spacing: 1px;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .button:hover {
+        background: linear-gradient(to bottom, #6a3a3a, #4a2a2a);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      .button:disabled {
+        background: linear-gradient(to bottom, #333, #222);
+        color: #666;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* Turn Indicator */
+      .turn-indicator {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: linear-gradient(to bottom, rgba(90, 42, 42, 0.9), rgba(70, 32, 32, 0.9));
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 14px;
+        border: 1px solid var(--text-highlight);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        z-index: 10;
+      }
+
+      /* Efeitos de Batalha */
+      .damage-effect {
+        position: absolute;
+        color: var(--text-danger);
+        font-size: 20px;
+        font-weight: bold;
+        text-shadow: 0 0 8px #ff0000, 0 0 15px #ff0000;
+        z-index: 100;
+        animation: floatUp 1s forwards;
+      }
+
+      .heal-effect {
+        position: absolute;
+        color: var(--text-heal);
+        font-size: 20px;
+        font-weight: bold;
+        text-shadow: 0 0 8px #00ff00, 0 0 15px #00ff00;
+        z-index: 100;
+        animation: floatUp 1s forwards;
+      }
+      
+      @keyframes floatUp {
+        0% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-50px) scale(1.5);
+        }
+      }
+
+      /* Mão do Jogador */
+      .hand-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 8px 0;
+      }
+
+      .hand-title {
+        color: var(--text-highlight);
+        margin-bottom: 8px;
+        font-size: 14px;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+      }
+
+      .hand-cards {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* Slot vazio */
+      .empty-slot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-size: 11px;
+        color: #777;
+      }
+
+      /* Container de botões */
+      .button-container {
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+      }
+      
+      /* Efeito de vitória/derrota */
+      .result-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9998;
+        color: white;
+        text-align: center;
+        font-family: 'Cinzel', serif;
+      }
+      
+      .result-content {
+        background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
+        padding: 30px;
+        border: 3px solid var(--card-border);
+        border-radius: 10px;
+        max-width: 500px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+      }
+      
+      .result-title {
+        color: var(--text-highlight);
+        font-size: 28px;
+        margin-bottom: 15px;
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+      }
+      
+      .result-message {
+        font-size: 18px;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+      
+      .result-button {
+        padding: 10px 25px;
+        font-size: 16px;
+        background: linear-gradient(to bottom, #5a2a2a, #3a1a1a);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+      
+      .result-button:hover {
+        background: linear-gradient(to bottom, #6a3a3a, #4a2a2a);
+        transform: scale(1.05);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="musicOverlay">
+        <div>
+            <h2>Hail Darknet RPG</h2>
+            <p>O reino de Eldrath está envolto em trevas. Como último membro da Ordem da Aurora, você deve enfrentar os horrores das sombras em duelos de poder e estratégia.</p>
+            <p>Clique no botão abaixo para dar início à sua jornada</p>
+            <button id="activateAudio">Iniciar Jornada</button>
+        </div>
+    </div>
+    
+    <div class="result-overlay" id="resultOverlay">
+      <div class="result-content">
+        <h2 class="result-title" id="resultTitle">Vitória!</h2>
+        <p class="result-message" id="resultMessage">Você derrotou o Senhor das Sombras!</p>
+        <button class="result-button" id="resultButton">Continuar</button>
+      </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Harvest Dawn.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Painel de Narrativa -->
+    <div class="narrative-panel">
+      <div class="story-title">Hail Darknet</div>
+      <div class="story-content">
+        <p>
+          Como último membro da Ordem da Aurora, você deve enfrentar esses
+          horrores em duelos de poder e estratégia.
+        </p>
+        <p class="dialogue">
+          "Nenhum mortal pode resistir às minhas legiões!" - Voz das Profundezas
+        </p>
+        <p>
+          Selecione suas cartas com sabedoria. Cada escolha pode significar a
+          diferença entre a vitória e a ruína eterna.
+        </p>
+      </div>
+      <div class="battle-log" id="battleLog">
+        <div class="log-entry">O duelo está prestes a começar...</div>
+      </div>
+    </div>
+
+    <!-- Área Principal do Jogo -->
+    <div class="game-area">
+      <!-- Fase de Seleção de Cartas -->
+      <div class="selection-phase" id="selectionPhase">
+        <h2 class="selection-title">Selecione até 5 cartas para o duelo</h2>
+        <div class="card-pool" id="cardPool"></div>
+        <div class="button-container">
+          <button class="button" id="startBattleBtn" disabled>
+            Iniciar Duelo
+          </button>
+        </div>
+      </div>
+
+      <!-- Fase de Batalha -->
+      <div class="battle-phase" id="battlePhase">
+        <div class="turn-indicator" id="turnIndicator">Seu Turno</div>
+
+        <div class="battlefield">
+          <!-- Lado do Inimigo -->
+          <div class="enemy-side">
+            <div class="side-title">Senhor das Sombras</div>
+            <div class="card-slots" id="enemySlot"></div>
+          </div>
+
+          <!-- Lado do Jogador -->
+          <div class="player-side">
+            <div id="playerHandArea" style="display: none">
+              <div class="hand-container">
+                <div class="hand-title">
+                  Sua Mão (Clique para colocar no campo)
+                </div>
+                <div class="hand-cards" id="playerHandCards"></div>
+              </div>
+            </div>
+            <div class="card-slots" id="playerSlots"></div>
+            <div class="side-title">Herói da Aurora</div>
+          </div>
+        </div>
+
+        <div class="button-container">
+          <button class="button" id="attackBtn">Atacar</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="music-controls">
+      <button class="music-btn" id="playPauseBtn">⏵</button>
+      <button class="music-btn" id="muteBtn">🔊</button>
+      <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-control" id="volumeControl">
+    </div>
+
+    <script>
+      // Banco de dados de cartas MODIFICADO com seus heróis
+      const cardsDatabase = [
+        {
+          id: 1,
+          name: "Ana",
+          art: "imgs/ana.png",
+          shield: 5,
+          health: 18,
+          maxHealth: 18,
+          attackRange: [4, 9],
+          ability: "Cura: Restaura 3 de vida a um aliado",
+          description: "Enfermeira que mantém a equipe viva",
+          dialogue: "Fica tranquilo, eu te cubro!"
+        },
+        {
+          id: 2,
+          name: "Gostozinho",
+          art: "imgs/gostozinho.png",
+          shield: 8,
+          health: 20,
+          maxHealth: 20,
+          attackRange: [4, 8],
+          ability: "Porrada: Dano +2 se estiver com vida cheia",
+          description: "O brabo do time",
+          dialogue: "Vamo que vamo, rapaziada!"
+        },
+        {
+          id: 3,
+          name: "Moreno",
+          art: "imgs/moreno.png",
+          shield: 4,
+          health: 15,
+          maxHealth: 15,
+          attackRange: [5, 9],
+          ability: "Sabedoria: Ignora 1 de escudo",
+          description: "Atirador certeiro",
+          dialogue: "Tiro na cabeça e acabou"
+        },
+        {
+          id: 4,
+          name: "Hugo",
+          art: "imgs/hugo.png",
+          shield: 10,
+          health: 16,
+          maxHealth: 16,
+          attackRange: [2, 5],
+          ability: "Defesa: Bloqueia 1 de dano extra",
+          description: "Tanque da equipe",
+          dialogue: "Ninguém passa por mim!"
+        },
+        {
+          id: 5,
+          name: "Messias",
+          art: "imgs/mesias.png",
+          shield: 3,
+          health: 12,
+          maxHealth: 12,
+          attackRange: [6, 10],
+          ability: "Crítico: Chance de dano máximo",
+          description: "Milagreiro do time",
+          dialogue: "Deus está comigo!"
+        },
+        {
+          id: 6,
+          name: "Erinaldo",
+          art: "imgs/erinaldo.png",
+          shield: 6,
+          health: 14,
+          maxHealth: 14,
+          attackRange: [1, 12],
+          ability: "Sorte: Dano aleatório (1-12)",
+          description: "Ou acerta ou erra feio",
+          dialogue: "Vai que é tua, Erinaldo!"
+        },
+        {
+          id: 7,
+          name: "Camila",
+          art: "imgs/camila.png",
+          shield: 7,
+          health: 13,
+          maxHealth: 13,
+          attackRange: [4, 7],
+          ability: "Precisão: Dano em área",
+          description: "Controla os elementos",
+          dialogue: "Os elementos obedecem ao meu comando!"
+        },
+        {
+          id: 8,
+          name: "Sidão",
+          art: "imgs/sidao.png",
+          shield: 9,
+          health: 16,
+          maxHealth: 16,
+          attackRange: [4, 6],
+          ability: "Golpe Sagrado: Dano extra",
+          description: "Guerreiro sagrado",
+          dialogue: "Pela luz, eu te julgo!"
+        },
+      ];
+
+      // Cartas de Boss com dano mais alto
+      const bossCards = [
+        {
+          id: 101,
+          name: "Mago Negro",
+          art: "imgs/magonegro.png",
+          shield: 12,
+          health: 25,
+          maxHealth: 25,
+          attackRange: [5, 10],
+          ability: "Sucumba: Cura metade do dano causado",
+          description: "Um antigo vampiro que se alimenta do sangue dos vivos.",
+          dialogue: "Seu sangue será meu banquete!",
+        },
+        {
+          id: 102,
+          name: "Dragão Negro",
+          art: "🐉",
+          shield: 15,
+          health: 30,
+          maxHealth: 30,
+          attackRange: [7, 12],
+          ability: "Sopro Ardente: 5 de dano a todos os oponentes",
+          description: "Uma besta ancestral que queima tudo em seu caminho.",
+          dialogue: "QUEIMEM! TUDO DEVE QUEIMAR!",
+        },
+        {
+          id: 103,
+          name: "Lich Imortal",
+          art: "☠️",
+          shield: 10,
+          health: "7",
+          maxHealth: "10",
+          attackRange: [6, 9],
+          ability: "Necrose: Reduz saúde máxima do inimigo",
+          description:
+            "Um mago que renunciou à vida para alcançar poder infinito.",
+          dialogue: "A morte é apenas o começo...",
+        },
+        {
+          id: 104,
+          name: "BILL GATES",
+          art: "imgs/bill.png",
+          shield: "?",
+          health: "?",
+          maxHealth: "?",
+          attackRange: ["?", "?"],
+          ability: "DEMON: Dano aleatório a cada turno",
+          description: "Uma manifestação do caos e da destruição.",
+          dialogue: "O abismo olha de volta para você!",
+        },
+      ];
+
+      // Variáveis do jogo
+      let selectedCards = [];
+      let playerDeck = [];
+      let playerHand = [];
+      let currentBoss = null;
+      let playerField = [];
+      let enemyField = [];
+      let isPlayerTurn = true;
+      let battleRound = 1;
+
+      // Elementos DOM
+      const selectionPhase = document.getElementById("selectionPhase");
+      const battlePhase = document.getElementById("battlePhase");
+      const cardPool = document.getElementById("cardPool");
+      const startBattleBtn = document.getElementById("startBattleBtn");
+      const playerSlots = document.getElementById("playerSlots");
+      const enemySlot = document.getElementById("enemySlot");
+      const battleLog = document.getElementById("battleLog");
+      const turnIndicator = document.getElementById("turnIndicator");
+      const attackBtn = document.getElementById("attackBtn");
+      const playerHandArea = document.getElementById("playerHandArea");
+      const playerHandCards = document.getElementById("playerHandCards");
+      const resultOverlay = document.getElementById("resultOverlay");
+      const resultTitle = document.getElementById("resultTitle");
+      const resultMessage = document.getElementById("resultMessage");
+      const resultButton = document.getElementById("resultButton");
+
+      // Elementos de música
+      const bgMusic = document.getElementById('bgMusic');
+      const musicOverlay = document.getElementById('musicOverlay');
+      const activateAudioBtn = document.getElementById('activateAudio');
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const muteBtn = document.getElementById('muteBtn');
+      const volumeControl = document.getElementById('volumeControl');
+
+      // Inicializar o jogo
+      function initGame() {
+        // Criar pool de seleção de cartas (10 aleatórias do banco)
+        const shuffledCards = [...cardsDatabase]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 10);
+
+        cardPool.innerHTML = "";
+        shuffledCards.forEach((card) => {
+          const cardElement = createCardElement(card);
+          cardElement.addEventListener("click", () =>
+            toggleCardSelection(card, cardElement)
+          );
+          cardPool.appendChild(cardElement);
+        });
+
+        selectedCards = [];
+        updateStartButton();
+        addStoryMessage("Selecione suas cartas para o próximo duelo.");
+      }
+
+      // Criar elemento de carta
+      function createCardElement(card, isBoss = false) {
+        const cardElement = document.createElement("div");
+        cardElement.className = `card ${isBoss ? "card-boss" : ""}`;
+        cardElement.dataset.id = card.id;
+
+        const [minDmg, maxDmg] = card.attackRange || [3, 6];
+
+        // Verifica se a propriedade 'art' termina com extensão de imagem
+        const isImage = card.art.match(/\.(png|jpg|jpeg|gif)$/i);
+        
+        cardElement.innerHTML = `
+          <div class="card-name">${card.name}</div>
+          <div class="card-art">
+            ${isImage ? `<img src="${card.art}" alt="${card.name}" style="width:100%; height:100%; object-fit:cover;">` : `<div style="width:100%; height:100%; display:flex; justify-content:center; align-items:center; font-size:48px;">${card.art}</div>`}
+          </div>
+          <div class="card-stats">
+            <div class="stat shield-stat">
+              <div class="stat-value">${card.shield}</div>
+              <div class="stat-name">ESCUDO</div>
+            </div>
+            <div class="stat health-stat">
+              <div class="stat-value">${card.health}/${card.maxHealth}</div>
+              <div class="stat-name">VIDA</div>
+            </div>
+            <div class="stat attack-stat">
+              <div class="stat-value">${minDmg}-${maxDmg}</div>
+              <div class="stat-name">DANO</div>
+            </div>
+          </div>
+          <div class="card-ability">${card.ability.split(":")[0]}</div>
+        `;
+
+        return cardElement;
+      }
+
+      // Alternar seleção de carta
+      function toggleCardSelection(card, cardElement) {
+        const index = selectedCards.findIndex((c) => c.id === card.id);
+
+        if (index === -1) {
+          if (selectedCards.length < 5) {
+            selectedCards.push(card);
+            cardElement.classList.add("selected");
+            addStoryMessage(`${card.name} adicionado ao seu deck.`);
+            playDialogue(card.dialogue);
+          }
+        } else {
+          selectedCards.splice(index, 1);
+          cardElement.classList.remove("selected");
+          addStoryMessage(`${card.name} removido do seu deck.`);
+        }
+
+        updateStartButton();
+      }
+
+      // Atualizar estado do botão de iniciar batalha
+      function updateStartButton() {
+        startBattleBtn.disabled = selectedCards.length === 0;
+        startBattleBtn.textContent =
+          selectedCards.length > 0
+            ? `Iniciar Duelo (${selectedCards.length}/5)`
+            : "Selecione pelo menos 1 carta";
+      }
+
+      // Iniciar batalha
+      function startBattle() {
+        // Criar cópias profundas das cartas selecionadas
+        playerDeck = JSON.parse(JSON.stringify(selectedCards));
+        currentBoss = JSON.parse(
+          JSON.stringify(
+            bossCards[Math.floor(Math.random() * bossCards.length)]
+          )
+        );
+
+        // Preparar campo de batalha
+        playerField = [];
+        enemyField = [currentBoss];
+
+        // Distribuir 3 cartas iniciais para a mão do jogador
+        playerHand = [];
+        for (let i = 0; i < 3; i++) {
+          if (playerDeck.length > 0) {
+            playerHand.push(playerDeck.pop());
+          }
+        }
+
+        // Atualizar interface
+        selectionPhase.style.display = "none";
+        battlePhase.style.display = "flex";
+        playerHandArea.style.display = "block";
+
+        // Mostrar cartas
+        renderBattlefield();
+        renderPlayerHand();
+
+        // Iniciar turno do jogador
+        isPlayerTurn = true;
+        battleRound = 1;
+        turnIndicator.textContent = "Seu Turno";
+        attackBtn.disabled = true;
+
+        // Adicionar mensagens de história
+        addStoryMessage(`O duelo começa contra ${currentBoss.name}!`);
+        playDialogue(currentBoss.dialogue);
+        addBattleLog(`Round ${battleRound}: Seu turno começa.`);
+        addBattleLog("Coloque cartas da sua mão no campo para começar!");
+      }
+
+      // Renderizar mão do jogador
+      function renderPlayerHand() {
+        playerHandCards.innerHTML = "";
+
+        playerHand.forEach((card, index) => {
+          const cardElement = createCardElement(card);
+          cardElement.style.transform = "translateY(0)";
+          cardElement.style.cursor = "pointer";
+          cardElement.addEventListener("click", () => summonCard(index));
+          playerHandCards.appendChild(cardElement);
+        });
+      }
+
+      // Invocar carta da mão para o campo
+      function summonCard(handIndex) {
+        if (playerField.length >= 5) {
+          addBattleLog("Você já tem o máximo de cartas no campo!");
+          return;
+        }
+
+        const card = playerHand[handIndex];
+        playerField.push(card);
+        playerHand.splice(handIndex, 1);
+
+        addBattleLog(`${card.name} foi colocada no campo!`);
+
+        renderBattlefield();
+        renderPlayerHand();
+
+        // Habilitar ataque se houver cartas no campo
+        attackBtn.disabled = playerField.length === 0;
+      }
+
+      // Renderizar campo de batalha
+      function renderBattlefield() {
+        playerSlots.innerHTML = "";
+        enemySlot.innerHTML = "";
+
+        // Cartas do jogador no campo
+        playerField.forEach((card, index) => {
+          const cardElement = createCardElement(card);
+          cardElement.addEventListener("click", () => selectPlayerCard(index));
+          if (card.selected) {
+            cardElement.classList.add("selected");
+          }
+          playerSlots.appendChild(cardElement);
+        });
+
+        // Slots vazios para o jogador
+        for (let i = playerField.length; i < 5; i++) {
+          const emptySlot = document.createElement("div");
+          emptySlot.className = "card";
+          emptySlot.innerHTML = '<div class="empty-slot">Slot Vazio</div>';
+          playerSlots.appendChild(emptySlot);
+        }
+
+        // Carta do boss
+        if (enemyField.length > 0) {
+          const bossCard = createCardElement(enemyField[0], true);
+          enemySlot.appendChild(bossCard);
+        }
+      }
+
+      // Selecionar carta do jogador
+      function selectPlayerCard(index) {
+        playerField.forEach((card, i) => {
+          card.selected = i === index;
+        });
+        renderBattlefield();
+        attackBtn.disabled = false;
+      }
+
+      // Realizar ataque
+      function performAttack() {
+        const attackingCardIndex = playerField.findIndex(
+          (card) => card.selected
+        );
+        if (attackingCardIndex === -1) return;
+
+        const attackingCard = playerField[attackingCardIndex];
+        const defendingCard = enemyField[0];
+
+        // 1. Calcular dano base
+        const [minDmg, maxDmg] = attackingCard.attackRange;
+        let damage = Math.floor(Math.random() * (maxDmg - minDmg + 1)) + minDmg;
+
+        // 2. Aplicar bônus de habilidades (ANTES de reduzir pelo escudo)
+        if (attackingCard.ability.includes("Precisão")) {
+          damage += 2; // Bônus fixo
+          addBattleLog(
+            `${attackingCard.name} ignora 2 de escudo com sua Precisão!`
+          );
+        } else if (attackingCard.ability.includes("Fúria")) {
+          const missingHealth = attackingCard.maxHealth - attackingCard.health;
+          if (missingHealth > 0) {
+            const bonus = Math.floor(missingHealth / 3);
+            damage += bonus;
+            addBattleLog(
+              `${attackingCard.name} fica mais forte com sua Fúria (+${bonus})!`
+            );
+          }
+        }
+
+        // 3. Registrar dano bruto antes da redução
+        addBattleLog(
+          `${attackingCard.name} ataca com ${damage} de dano bruto!`
+        );
+
+        // 4. Reduzir pelo escudo (mas garantir mínimo de 1)
+        const damageAfterShield = Math.max(1, damage - defendingCard.shield);
+
+        // 5. Aplicar dano real
+        defendingCard.health -= damageAfterShield;
+
+        // Feedback visual
+        const bossCard = enemySlot.querySelector(".card");
+        showDamageEffect(bossCard, damageAfterShield);
+
+        // Mensagem detalhada
+        addBattleLog(
+          `Dano final: ${damage} - ${defendingCard.shield} (escudo) = ${damageAfterShield}`
+        );
+
+        // Verificar se o boss foi derrotado
+        if (defendingCard.health <= 0) {
+          defendingCard.health = 0;
+          addBattleLog(`${defendingCard.name} foi derrotado! Vitória!`);
+          playDialogue("NÃÃÃOOO! Isso não é possível...");
+          
+          // Mostrar tela de vitória
+          showResult(true);
+
+          return;
+        }
+
+        // Desmarcar carta e terminar turno
+        playerField.forEach((card) => (card.selected = false));
+        renderBattlefield();
+        setTimeout(() => endTurn(), 1500);
+      }
+
+      // Terminar turno (agora chamado automaticamente após o ataque)
+      function endTurn() {
+        isPlayerTurn = false;
+        turnIndicator.textContent = "Turno do Inimigo";
+        attackBtn.disabled = true;
+
+        addBattleLog(`Turno do inimigo começando...`);
+
+        // Ataque do inimigo (simplificado)
+        setTimeout(() => {
+          if (enemyField.length === 0 || playerField.length === 0) return;
+
+          const attackingCard = enemyField[0];
+          const defendingCard =
+            playerField[Math.floor(Math.random() * playerField.length)];
+
+          // Calcular dano baseado no range de ataque do boss
+          const [minDmg, maxDmg] = attackingCard.attackRange;
+          let damage =
+            Math.floor(Math.random() * (maxDmg - minDmg + 1)) + minDmg;
+
+          // Aplicar habilidades especiais do boss
+          if (attackingCard.ability.includes("Sanguessuga")) {
+            const healAmount = Math.floor(damage / 2);
+            attackingCard.health = Math.min(
+              attackingCard.maxHealth,
+              attackingCard.health + healAmount
+            );
+            addBattleLog(
+              `${attackingCard.name} drena ${healAmount} de vida do ataque!`
+            );
+            showDamageEffect(enemySlot.querySelector(".card"), -healAmount);
+          }
+
+          // Reduzir dano pelo escudo do defensor
+          damage = Math.max(1, damage - defendingCard.shield);
+
+          // Aplicar dano
+          defendingCard.health -= damage;
+
+          // Feedback visual
+          const playerCard =
+            playerSlots.children[[...playerField].indexOf(defendingCard)];
+          showDamageEffect(playerCard, damage);
+
+          addBattleLog(
+            `${attackingCard.name} ataca (${minDmg}-${maxDmg}) causando ${damage} de dano a ${defendingCard.name}!`
+          );
+
+          // Verificar se a carta do jogador foi derrotada
+          if (defendingCard.health <= 0) {
+            defendingCard.health = 0;
+            addBattleLog(`${defendingCard.name} foi derrotado!`);
+
+            // Remover carta do campo
+            playerField = playerField.filter((card) => card.health > 0);
+
+            // Verificar derrota
+            if (playerField.length === 0) {
+              addBattleLog("Todas suas cartas foram derrotadas! Derrota!");
+              playDialogue("Patético! Sua resistência foi em vão!");
+              
+              // Mostrar tela de derrota
+              showResult(false);
+              
+              return;
+            }
+          }
+
+          // Próximo turno do jogador
+          setTimeout(() => {
+            startPlayerTurn();
+          }, 1500);
+        }, 1000);
+      }
+
+      // Mostrar tela de resultado (vitória/derrota)
+      function showResult(victory) {
+        if (victory) {
+          resultTitle.textContent = "Vitória!";
+          resultTitle.style.color = "#55ff55";
+          resultMessage.textContent = `Você derrotou ${currentBoss.name} e salvou o reino de Eldrath!`;
+        } else {
+          resultTitle.textContent = "Derrota";
+          resultTitle.style.color = "#ff5555";
+          resultMessage.textContent = `Você foi derrotado por ${currentBoss.name}. As trevas consomem o reino...`;
+        }
+        
+        resultOverlay.style.display = "flex";
+      }
+
+      // Iniciar turno do jogador
+      function startPlayerTurn() {
+        isPlayerTurn = true;
+        battleRound++;
+        turnIndicator.textContent = "Seu Turno";
+        addBattleLog(`Round ${battleRound}: Seu turno começa.`);
+
+        // Comprar uma carta no início do turno (se houver cartas no deck)
+        if (playerDeck.length > 0 && playerHand.length < 5) {
+          const drawnCard = playerDeck.pop();
+          playerHand.push(drawnCard);
+          renderPlayerHand();
+          addBattleLog(`Você comprou ${drawnCard.name} do seu deck.`);
+        }
+
+        // Resetar status de ataque das cartas
+        playerField.forEach((card) => {
+          card.selected = false;
+        });
+
+        renderBattlefield();
+      }
+
+      // Finalizar batalha
+      function endBattle(victory) {
+        if (victory) {
+          addStoryMessage(
+            `Você derrotou ${currentBoss.name} e ganhou o duelo!`
+          );
+          addStoryMessage("O reino está seguro... por enquanto.");
+        } else {
+          addStoryMessage(`Você foi derrotado por ${currentBoss.name}.`);
+          addStoryMessage("As trevas consomem o reino...");
+        }
+
+        // Voltar para seleção de cartas
+        battlePhase.style.display = "none";
+        selectionPhase.style.display = "flex";
+        playerHandArea.style.display = "none";
+        initGame();
+      }
+
+      // Mostrar efeito de dano
+      function showDamageEffect(element, amount) {
+        const effect = document.createElement("div");
+        effect.className = amount >= 0 ? "damage-effect" : "heal-effect";
+        effect.textContent =
+          amount >= 0 ? `-${amount}` : `+${Math.abs(amount)}`;
+
+        const rect = element.getBoundingClientRect();
+        effect.style.left = `${rect.left + rect.width / 2 - 15}px`;
+        effect.style.top = `${rect.top + rect.height / 2 - 30}px`;
+
+        document.body.appendChild(effect);
+
+        setTimeout(() => {
+          effect.remove();
+        }, 1000);
+      }
+
+      // Adicionar mensagem de história
+      function addStoryMessage(message) {
+        const storyContent = document.querySelector(".story-content");
+        const p = document.createElement("p");
+        p.textContent = message;
+        storyContent.appendChild(p);
+        storyContent.scrollTop = storyContent.scrollHeight;
+      }
+
+      // Adicionar mensagem de diálogo
+      function playDialogue(dialogue) {
+        const storyContent = document.querySelector(".story-content");
+        const p = document.createElement("p");
+        p.className = "dialogue";
+        p.textContent = `"${dialogue}"`;
+        storyContent.appendChild(p);
+        storyContent.scrollTop = storyContent.scrollHeight;
+      }
+
+      // Adicionar mensagem de batalha
+      function addBattleLog(message) {
+        const entry = document.createElement("div");
+        entry.className = "log-entry";
+        entry.textContent = message;
+        battleLog.appendChild(entry);
+        battleLog.scrollTop = battleLog.scrollHeight;
+      }
+      
+      // Configurações de música
+      function setupAudio() {
+        // Configurações iniciais
+        bgMusic.volume = 0.5;
+        
+        // Tenta autoplay imediatamente (pode falhar em muitos navegadores)
+        const playPromise = bgMusic.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Se funcionar, esconde o overlay
+                musicOverlay.style.display = 'none';
+            }).catch(error => {
+                console.log("Autoplay bloqueado:", error);
+                // Mostra o overlay para interação do usuário
+                musicOverlay.style.display = 'flex';
+            });
+        }
+        
+        // Botão de ativação manual
+        activateAudioBtn.addEventListener('click', () => {
+            bgMusic.play()
+                .then(() => {
+                    musicOverlay.style.display = 'none';
+                    // Marca que o usuário interagiu (para futuros carregamentos)
+                    localStorage.setItem('audioInteraction', 'true');
+                })
+                .catch(e => console.log("Erro ao iniciar música:", e));
+        });
+        
+        // Se o usuário já interagiu antes, tenta autoplay imediatamente
+        if (localStorage.getItem('audioInteraction') === 'true') {
+            bgMusic.play().catch(e => console.log("Autoplay falhou mesmo com interação prévia:", e));
+        }
+        
+        // Tenta autoplay quando o usuário interage com a página
+        document.addEventListener('click', function firstInteraction() {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(e => console.log("Erro ao tocar música:", e));
+            }
+            document.removeEventListener('click', firstInteraction);
+        }, { once: true });
+        
+        // Controles de música
+        playPauseBtn.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                playPauseBtn.textContent = '⏸';
+            } else {
+                bgMusic.pause();
+                playPauseBtn.textContent = '⏵';
+            }
+        });
+        
+        muteBtn.addEventListener('click', () => {
+            bgMusic.muted = !bgMusic.muted;
+            muteBtn.textContent = bgMusic.muted ? '🔇' : '🔊';
+        });
+        
+        volumeControl.addEventListener('input', () => {
+            bgMusic.volume = volumeControl.value;
+        });
+        
+        // Atualizar estado inicial dos controles
+        bgMusic.addEventListener('play', () => {
+            playPauseBtn.textContent = '⏸';
+        });
+        
+        bgMusic.addEventListener('pause', () => {
+            playPauseBtn.textContent = '⏵';
+        });
+      }
+
+      // Event Listeners
+      startBattleBtn.addEventListener("click", startBattle);
+      attackBtn.addEventListener("click", performAttack);
+      resultButton.addEventListener("click", () => {
+        resultOverlay.style.display = "none";
+        endBattle(resultTitle.textContent === "Vitória!");
+      });
+
+      // Iniciar o jogo
+      setupAudio();
+      initGame();
+    </script>
+  </body>
+  </html> 
