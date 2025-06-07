@@ -561,7 +561,7 @@ body {
 
 .field-slot {
   width: 160px;
-  height: 220px;
+  height: 210px;
   border: 2px dashed var(--border-color);
   border-radius: 12px;
   background: rgba(30, 30, 30, 0.6);
