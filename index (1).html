@@ -1,267 +1,297 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hail Darknet RPG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <!-- Slideshow de História -->
     <div id="storySlideshow" class="story-slideshow">
-        <div class="slide active" style="background-image: url('imgs/foto1.png');">
-            <div class="slide-content">
-                <h2>O Reino de Eldrath</h2>
-                <p>Eldrath já foi um reino próspero, governado com sabedoria pelos reis da Luz Eterna.</p>
-            </div>
+      <div class="slide active" style="background-image: url('imgs/foto1.png')">
+        <div class="slide-content">
+          <h2>O Reino de Eldrath</h2>
+          <p>
+            Eldrath já foi um reino próspero, governado com sabedoria pelos reis
+            da Luz Eterna.
+          </p>
         </div>
-        <div class="slide" style="background-image: url('imgs/foto2.png');">
-            <div class="slide-content">
-                <h2>A Queda</h2>
-                <p>O Lorde cibernético das profundezas Cibernéticas despertou e lançou seu exército de criaturas das trevas sobre o reino.</p>
-            </div>
+      </div>
+      <div class="slide" style="background-image: url('imgs/foto2.png')">
+        <div class="slide-content">
+          <h2>A Queda</h2>
+          <p>
+            O Lorde cibernético das profundezas Cibernéticas despertou e lançou
+            seu exército de criaturas das trevas sobre o reino.
+          </p>
         </div>
-        <div class="slide" style="background-image: url('imgs/foto4.png');">
-            <div class="slide-content">
-                <h2>A Resistência</h2>
-                <p>A Ordem da Resistência foi convocada para combater as trevas, mas seus membros foram caindo um a um.</p>
-            </div>
+      </div>
+      <div class="slide" style="background-image: url('imgs/foto4.png')">
+        <div class="slide-content">
+          <h2>A Resistência</h2>
+          <p>
+            A Ordem da Resistência foi convocada para combater as trevas, mas
+            seus membros foram caindo um a um.
+          </p>
         </div>
-        <div class="slide" style="background-image: url('imgs/foto3.png');">
-            <div class="slide-content">
-                <h2>A Última Esperança</h2>
-                <p>Agora, apenas você resta. A última esperança de Eldrath contra as trevas.</p>
-            </div>
+      </div>
+      <div class="slide" style="background-image: url('imgs/foto3.png')">
+        <div class="slide-content">
+          <h2>A Última Esperança</h2>
+          <p>
+            Agora, apenas você resta. A última esperança de Eldrath contra as
+            trevas.
+          </p>
         </div>
-        
-        <div class="slide-navigation">
-            <span class="slide-dot active" onclick="currentSlide(1)"></span>
-            <span class="slide-dot" onclick="currentSlide(2)"></span>
-            <span class="slide-dot" onclick="currentSlide(3)"></span>
-            <span class="slide-dot" onclick="currentSlide(4)"></span>
-        </div>
-        
-        <button class="skip-button" onclick="skipIntro()">Pular Introdução</button>
+      </div>
+
+      <div class="slide-navigation">
+        <span class="slide-dot active" onclick="currentSlide(1)"></span>
+        <span class="slide-dot" onclick="currentSlide(2)"></span>
+        <span class="slide-dot" onclick="currentSlide(3)"></span>
+        <span class="slide-dot" onclick="currentSlide(4)"></span>
+      </div>
+
+      <button class="skip-button" onclick="skipIntro()">
+        Pular Introdução
+      </button>
     </div>
 
     <!-- Tela de Carregamento -->
     <div id="loadingScreen" class="loading-screen hidden">
-        <div class="loading-content">
-            <div class="darknet-logo">
-                <div class="logo-ring"></div>
-                <div class="logo-core">⚔️</div>
-            </div>
-            <h1 class="game-title">HAIL DARKNET</h1>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-            </div>
-            <p class="loading-text">Invocando as Trevas...</p>
+      <div class="loading-content">
+        <div class="darknet-logo">
+          <div class="logo-ring"></div>
+          <div class="logo-core">⚔️</div>
         </div>
+        <h1 class="game-title">HAIL DARKNET</h1>
+        <div class="loading-bar">
+          <div class="loading-progress"></div>
+        </div>
+        <p class="loading-text">Invocando as Trevas...</p>
+      </div>
     </div>
 
     <!-- Menu Principal -->
     <div id="mainMenu" class="main-menu hidden">
-        <div class="menu-background"></div>
-        <div class="menu-content">
-            <div class="title-section">
-                <h1 class="main-title">HAIL DARKNET</h1>
-                <p class="subtitle">A Última Esperança de Eldrath</p>
-            </div>
-            
-            <div class="menu-buttons">
-                <button class="menu-btn primary" id="newGameBtn">
-                    <span class="btn-icon">⚔️</span>
-                    Nova Jornada
-                </button>
-                <button class="menu-btn secondary" id="continueBtn">
-                    <span class="btn-icon">📜</span>
-                    Continuar Saga
-                </button>
-                <button class="menu-btn secondary" id="achievementsBtn">
-                    <span class="btn-icon">🏆</span>
-                    Conquistas
-                </button>
-                <button class="menu-btn secondary" id="tutorialBtn">
-                    <span class="btn-icon">📖</span>
-                    Como Jogar
-                </button>
-            </div>
+      <div class="menu-background"></div>
+      <div class="menu-content">
+        <div class="title-section">
+          <h1 class="main-title">HAIL DARKNET</h1>
+          <p class="subtitle">A Última Esperança de Eldrath</p>
         </div>
-        
-        <div class="version-info">Ordem da Aurora v2.0</div>
+
+        <div class="menu-buttons">
+          <button class="menu-btn primary" id="newGameBtn">
+            <span class="btn-icon">⚔️</span>
+            Nova Jornada
+          </button>
+          <button class="menu-btn secondary" id="continueBtn">
+            <span class="btn-icon">📜</span>
+            Continuar Saga
+          </button>
+          <button class="menu-btn secondary" id="achievementsBtn">
+            <span class="btn-icon">🏆</span>
+            Conquistas
+          </button>
+          <button class="menu-btn secondary" id="tutorialBtn">
+            <span class="btn-icon">📖</span>
+            Como Jogar
+          </button>
+        </div>
+      </div>
+
+      <div class="version-info">Ordem da Aurora v2.0</div>
     </div>
 
     <!-- Tela do Jogo -->
     <div id="gameScreen" class="game-screen hidden">
-        <!-- HUD Superior -->
-        <div class="top-hud">
-            <div class="player-info">
-                <div class="player-avatar">
-                    <div class="avatar-ring"></div>
-                    <span class="avatar-icon">🧙‍♂️</span>
-                </div>
-                <div class="player-stats">
-                    <div class="stat">
-                        <span class="stat-label">Vitórias</span>
-                        <span class="stat-value" id="victories">0</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-label">Fase</span>
-                        <span class="stat-value" id="currentPhase">1</span>
-                    </div>
-                </div>
+      <!-- HUD Superior -->
+      <div class="top-hud">
+        <div class="player-info">
+          <div class="player-avatar">
+            <div class="avatar-ring"></div>
+            <span class="avatar-icon">🧙‍♂️</span>
+          </div>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-label">Vitórias</span>
+              <span class="stat-value" id="victories">0</span>
             </div>
-            
-            <div class="game-controls">
-                <button class="control-btn" id="pauseBtn">⏸️</button>
-                <button class="control-btn" id="menuBtn">🏠</button>
+            <div class="stat">
+              <span class="stat-label">Fase</span>
+              <span class="stat-value" id="currentPhase">1</span>
             </div>
+          </div>
         </div>
 
-        <!-- Área de Batalha -->
-        <div class="battle-area">
-            <!-- Campo Inimigo -->
-            <div class="enemy-field">
-                <div class="enemy-info">
-                    <div class="enemy-name" id="enemyName">Senhor das Sombras</div>
-                    <div class="enemy-health">
-                        <div class="health-bar">
-                            <div class="health-fill" id="enemyHealthFill"></div>
-                        </div>
-                        <span class="health-text" id="enemyHealthText">100/100</span>
-                    </div>
-                </div>
-                <div class="enemy-card-slot" id="enemyCardSlot"></div>
-            </div>
+        <div class="game-controls">
+          <button class="control-btn" id="pauseBtn">⏸️</button>
+          <button class="control-btn" id="menuBtn">🏠</button>
+        </div>
+      </div>
 
-            <!-- Campo do Jogador -->
-            <div class="player-field">
-                <div class="field-slots" id="playerFieldSlots">
-                    <!-- Slots serão gerados dinamicamente -->
-                </div>
-                <div class="hand-area">
-                    <div class="hand-label">Heróis da Aurora</div>
-                    <div class="hand-cards" id="handCards"></div>
-                </div>
+      <!-- Área de Batalha -->
+      <div class="battle-area">
+        <!-- Campo Inimigo -->
+        <div class="enemy-field">
+          <div class="enemy-info">
+            <div class="enemy-name" id="enemyName">Senhor das Sombras</div>
+            <div class="enemy-health">
+              <div class="health-bar">
+                <div class="health-fill" id="enemyHealthFill"></div>
+              </div>
+              <span class="health-text" id="enemyHealthText">100/100</span>
             </div>
+          </div>
+          <div class="enemy-card-slot" id="enemyCardSlot"></div>
         </div>
 
-        <!-- Painel de Ações -->
-        <div class="action-panel">
-            <div class="resources">
-                <div class="resource mana">
-                    <span class="resource-icon">🔮</span>
-                    <span class="resource-value" id="manaValue">3/3</span>
-                    <span class="resource-label">Mana</span>
-                </div>
-                <div class="resource energy">
-                    <span class="resource-icon">⚡</span>
-                    <span class="resource-value" id="energyValue">2/2</span>
-                    <span class="resource-label">Energia</span>
-                </div>
-            </div>
-            
-            <div class="action-buttons">
-                <button class="action-btn" id="drawCardBtn">Invocar Herói</button>
-                <button class="action-btn primary" id="endTurnBtn">Finalizar Turno</button>
-            </div>
+        <!-- Campo do Jogador -->
+        <div class="player-field">
+          <div class="field-slots" id="playerFieldSlots">
+            <!-- Slots serão gerados dinamicamente -->
+          </div>
+          <div class="hand-area">
+            <div class="hand-label">Heróis da Aurora</div>
+            <div class="hand-cards" id="handCards"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel de Ações -->
+      <div class="action-panel">
+        <div class="resources">
+          <div class="resource mana">
+            <span class="resource-icon">🔮</span>
+            <span class="resource-value" id="manaValue">3/3</span>
+            <span class="resource-label">Mana</span>
+          </div>
+          <div class="resource energy">
+            <span class="resource-icon">⚡</span>
+            <span class="resource-value" id="energyValue">2/2</span>
+            <span class="resource-label">Energia</span>
+          </div>
         </div>
 
-        <!-- Log de Batalha -->
-        <div class="battle-log" id="battleLog">
-            <div class="log-header">Crônicas da Batalha</div>
-            <div class="log-content" id="logContent">
-                <div class="log-entry">A batalha está prestes a começar...</div>
-            </div>
+        <div class="action-buttons">
+          <button class="action-btn" id="drawCardBtn">Invocar Herói</button>
+          <button class="action-btn primary" id="endTurnBtn">
+            Finalizar Turno
+          </button>
         </div>
+      </div>
+
+      <!-- Log de Batalha -->
+      <div class="battle-log" id="battleLog">
+        <div class="log-header">Crônicas da Batalha</div>
+        <div class="log-content" id="logContent">
+          <div class="log-entry">A batalha está prestes a começar...</div>
+        </div>
+      </div>
     </div>
 
     <!-- Seleção de Esquadrão -->
     <div id="squadSelection" class="squad-selection hidden">
-        <div class="selection-header">
-            <h2>Forme Seu Esquadrão</h2>
-            <p>Escolha 5 heróis para enfrentar as trevas de Eldrath</p>
-            <div class="squad-counter">
-                <span id="selectedHeroes">0</span>/5 heróis selecionados
-            </div>
+      <div class="selection-header">
+        <h2>Forme Seu Esquadrão</h2>
+        <p>Escolha 5 heróis para enfrentar as trevas de Eldrath</p>
+        <div class="squad-counter">
+          <span id="selectedHeroes">0</span>/5 heróis selecionados
         </div>
-        
-        <div class="hero-filters">
-            <button class="filter-btn active" data-type="all">Todos</button>
-            <button class="filter-btn" data-type="tank">Tanques</button>
-            <button class="filter-btn" data-type="marksman">Atiradores</button>
-            <button class="filter-btn" data-type="support">Suporte</button>
-            <button class="filter-btn" data-type="mage">Magos</button>
-        </div>
-        
-        <div class="heroes-grid" id="heroesGrid"></div>
-        
-        <div class="selection-actions">
-            <button class="action-btn secondary" id="randomSquadBtn">Esquadrão Aleatório</button>
-            <button class="action-btn primary" id="startBattleBtn" disabled>Iniciar Duelo</button>
-        </div>
+      </div>
+
+      <div class="hero-filters">
+        <button class="filter-btn active" data-type="all">Todos</button>
+        <button class="filter-btn" data-type="tank">Tanques</button>
+        <button class="filter-btn" data-type="marksman">Atiradores</button>
+        <button class="filter-btn" data-type="support">Suporte</button>
+        <button class="filter-btn" data-type="mage">Magos</button>
+      </div>
+
+      <div class="heroes-grid" id="heroesGrid"></div>
+
+      <div class="selection-actions">
+        <button class="action-btn secondary" id="randomSquadBtn">
+          Esquadrão Aleatório
+        </button>
+        <button class="action-btn primary" id="startBattleBtn" disabled>
+          Iniciar Duelo
+        </button>
+      </div>
     </div>
 
     <!-- Modal de Herói -->
     <div id="heroModal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalHeroName">Nome do Herói</h3>
-                <button class="close-btn" id="closeModal">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="hero-preview" id="modalHeroPreview"></div>
-                <div class="hero-details">
-                    <p class="hero-description" id="modalHeroDescription"></p>
-                    <div class="hero-dialogue" id="modalHeroDialogue"></div>
-                    <div class="hero-abilities" id="modalHeroAbilities"></div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalHeroName">Nome do Herói</h3>
+          <button class="close-btn" id="closeModal">×</button>
         </div>
+        <div class="modal-body">
+          <div class="hero-preview" id="modalHeroPreview"></div>
+          <div class="hero-details">
+            <p class="hero-description" id="modalHeroDescription"></p>
+            <div class="hero-dialogue" id="modalHeroDialogue"></div>
+            <div class="hero-abilities" id="modalHeroAbilities"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Modal de Tutorial -->
     <div id="tutorialModal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Como Jogar</h3>
-                <button class="close-btn" id="closeTutorial">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="tutorial-section">
-                    <h4>🎯 Objetivo</h4>
-                    <p>Derrote todos os bosses das 7 fases para salvar o reino de Eldrath das trevas.</p>
-                </div>
-                <div class="tutorial-section">
-                    <h4>⚔️ Combate</h4>
-                    <p>• Selecione 5 heróis para formar seu esquadrão<br>
-                    • Invoque heróis da sua mão para o campo de batalha<br>
-                    • Clique em um herói no campo para atacar o inimigo<br>
-                    • Gerencie sua Mana e Energia sabiamente</p>
-                </div>
-                <div class="tutorial-section">
-                    <h4>🛡️ Habilidades Especiais</h4>
-                    <p>• <strong>Cura:</strong> Restaura vida de aliados<br>
-                    • <strong>Crítico:</strong> Chance de dano máximo<br>
-                    • <strong>Precisão:</strong> Ignora parte do escudo inimigo<br>
-                    • <strong>Defesa:</strong> Reduz dano recebido</p>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Como Jogar</h3>
+          <button class="close-btn" id="closeTutorial">×</button>
         </div>
+        <div class="modal-body">
+          <div class="tutorial-section">
+            <h4>🎯 Objetivo</h4>
+            <p>
+              Derrote todos os bosses das 7 fases para salvar o reino de Eldrath
+              das trevas.
+            </p>
+          </div>
+          <div class="tutorial-section">
+            <h4>⚔️ Combate</h4>
+            <p>
+              • Selecione 5 heróis para formar seu esquadrão<br />
+              • Invoque heróis da sua mão para o campo de batalha<br />
+              • Clique em um herói no campo para atacar o inimigo<br />
+              • Gerencie sua Mana e Energia sabiamente
+            </p>
+          </div>
+          <div class="tutorial-section">
+            <h4>🛡️ Habilidades Especiais</h4>
+            <p>
+              • <strong>Cura:</strong> Restaura vida de aliados<br />
+              • <strong>Crítico:</strong> Chance de dano máximo<br />
+              • <strong>Precisão:</strong> Ignora parte do escudo inimigo<br />
+              • <strong>Defesa:</strong> Reduz dano recebido
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Modal de Conquistas -->
     <div id="achievementsModal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>🏆 Conquistas da Ordem</h3>
-                <button class="close-btn" id="closeAchievements">×</button>
-            </div>
-            <div class="modal-body">
-                <div id="achievementsList" class="achievements-list"></div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>🏆 Conquistas da Ordem</h3>
+          <button class="close-btn" id="closeAchievements">×</button>
         </div>
+        <div class="modal-body">
+          <div id="achievementsList" class="achievements-list"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Sistema de Notificações -->
@@ -269,21 +299,29 @@
 
     <!-- Controles de Áudio -->
     <div class="audio-controls">
-        <button class="audio-btn" id="playPauseBtn">⏵</button>
-        <button class="audio-btn" id="muteBtn">🔊</button>
-        <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-control" id="volumeControl">
+      <button class="audio-btn" id="playPauseBtn">⏵</button>
+      <button class="audio-btn" id="muteBtn">🔊</button>
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+        value="0.5"
+        class="volume-control"
+        id="volumeControl"
+      />
     </div>
 
     <!-- Áudio -->
     <audio id="bgMusic" loop>
-        <source src="Reunião dos Heróis.mp3" type="audio/mpeg">
+      <source src="Reunião dos Heróis.mp3" type="audio/mpeg" />
     </audio>
 
     <audio id="battleMusic" loop>
-        <source src="Nightmare Circuitry.mp3" type="audio/mpeg">
+      <source src="Nightmare Circuitry.mp3" type="audio/mpeg" />
     </audio>
 
     <!-- Scripts -->
     <script src="game.js"></script>
-</body>
+  </body>
 </html>
