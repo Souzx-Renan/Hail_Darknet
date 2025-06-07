@@ -10,7 +10,7 @@ const GAME_CONFIG = {
 
 // ===== BANCO DE DADOS DE HERÓIS (CARTAS ORIGINAIS) =====
 const HEROES_DATABASE = [
-  {
+    {
     id: 1,
     name: "Ana",
     art: "imgs/ana.png",
@@ -36,7 +36,7 @@ const HEROES_DATABASE = [
     ability: "Porrada: +3 de dano se estiver com vida cheia",
     description: "O brabo do time, sempre na linha de frente.",
     dialogue: "Vamo que vamo, rapaziada!",
-    type: "tank",
+    type: "marksman",
     rarity: "rare",
     cost: 3,
   },
@@ -66,7 +66,7 @@ const HEROES_DATABASE = [
     ability: "Defesa: Bloqueia 1 de dano extra de cada ataque",
     description: "Tanque da equipe, protege os aliados com seu escudo.",
     dialogue: "Ninguém passa por mim!",
-    type: "tank",
+    type: "mage",
     rarity: "common",
     cost: 2,
   },
@@ -81,7 +81,7 @@ const HEROES_DATABASE = [
     ability: "Crítico: 30% de chance de causar dano máximo",
     description: "Milagreiro do time, seus ataques são imprevisíveis.",
     dialogue: "Deus está comigo!",
-    type: "marksman",
+    type: "mage",
     rarity: "rare",
     cost: 3,
   },
@@ -96,7 +96,7 @@ const HEROES_DATABASE = [
     ability: "Sorte: Dano totalmente aleatório (1-10)",
     description: "Ou acerta ou erra feio, não há meio termo.",
     dialogue: "Vai que é tua, Erinaldo!",
-    type: "wildcard",
+    type: "marksman",
     rarity: "epic",
     cost: 2,
   },
@@ -111,7 +111,7 @@ const HEROES_DATABASE = [
     ability: "Magia Elemental: 20% chance de causar +4 de dano",
     description: "Controla os elementos com precisão cirúrgica.",
     dialogue: "Os elementos obedecem ao meu comando!",
-    type: "mage",
+    type: "marksman",
     rarity: "rare",
     cost: 3,
   },
@@ -126,7 +126,7 @@ const HEROES_DATABASE = [
     ability: "Golpe Sagrado: 40% de chance de +2 de dano",
     description: "Guerreiro sagrado que abate os hereges.",
     dialogue: "Pela luz, eu te julgo!",
-    type: "paladin",
+    type: "tank",
     rarity: "rare",
     cost: 3,
   },
