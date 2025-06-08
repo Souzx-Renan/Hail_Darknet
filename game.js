@@ -221,14 +221,14 @@ const ACHIEVEMENTS = [
   {
     id: "system_breaker",
     name: "Quebrador de Sistemas",
-    description: "Derrote a primeira forma do Bill Gates",
+    description: "Derrote a primeira forma da IA",
     icon: "💻",
     unlocked: false,
   },
   {
     id: "champion",
     name: "Salvador de Eldrath",
-    description: "Derrote a forma final do Bill Gates",
+    description: "Derrote a forma final da IA",
     icon: "👑",
     unlocked: false,
   },
@@ -714,7 +714,7 @@ class BattleManager {
       );
     }
 
-    // Controle de Sistema (Bill Gates - Primeira Forma)
+    // Controle de Sistema (I.A - Primeira Forma)
     if (boss.ability.includes("Controle de Sistema") && Math.random() < 0.3) {
       this.addBattleLog(
         `${boss.name} hackeia o sistema! Seu próximo turno será pulado!`,
@@ -728,7 +728,7 @@ class BattleManager {
       return; // Não executar ataque normal
     }
 
-    // Dominação Total (Bill Gates - Forma Final)
+    // Dominação Total (I.A - Forma Final)
     if (boss.ability.includes("Dominação Total")) {
       // Regeneração
       const healAmount = 3;
@@ -811,14 +811,14 @@ class BattleManager {
       "heal"
     );
 
-    // Verificar se é a primeira forma do Bill Gates
+    // Verificar se é a primeira forma da I.A
     if (gameState.currentBoss.isFirstForm) {
       this.addBattleLog(
         `"IMPOSSÍVEL! Mas... eu tenho uma FORMA FINAL!"`,
         "ability"
       );
       NotificationSystem.show(
-        "Bill Gates se transforma! Prepare-se para a batalha final!",
+        "I.A se transforma! Prepare-se para a batalha final!",
         "warning",
         6000
       );
@@ -837,7 +837,7 @@ class BattleManager {
     AchievementSystem.checkAchievements(gameState);
 
     if (gameState.currentPhase >= GAME_CONFIG.PHASES) {
-      // Jogo completo - derrotou a forma final do Bill Gates
+      // Jogo completo - derrotou a forma final da I.A
       this.addBattleLog(
         `"NÃÃÃOOO! O SISTEMA... ESTÁ... FALHANDO..."`,
         "ability"
