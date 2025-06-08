@@ -258,7 +258,7 @@ html, body {
   width: 100%;
   height: 100%;
   background-color: #000000;
-  background-image: url(imgs/inicio.png);
+  background-image: url(/imgs/inicio.png);
   z-index: -1;
   background-size: cover;
   background-position: center;
@@ -371,7 +371,7 @@ html, body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url("imgs/20250516_201359_489\ $$1$$.png");
+  background-image: url("/imgs/20250516_201359_489\ $$1$$.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -475,7 +475,7 @@ html, body {
 
 /* ===== ÁREA DE BATALHA ===== */
 .battle-area {
-  background-image: url(imgs/trees.png);
+  background-image: url(/imgs/trees.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -883,7 +883,7 @@ html, body {
 
 /* ===== SELEÇÃO DE ESQUADRÃO ===== */
 .squad-selection {
-  background-image: url(imgs/trees.png);
+  background-image: url(/imgs/trees.png);
   position: fixed;
   top: 0;
   left: 0;
