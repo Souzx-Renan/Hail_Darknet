@@ -38,7 +38,7 @@ html, body {
   height: 100%;
   flex-direction:column;
 }
-
+/*
 /* ===== SLIDESHOW DE HISTÓRIA ===== */
 .story-slideshow {
   position: fixed;
@@ -258,8 +258,8 @@ html, body {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(74, 14, 78, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(58, 128, 133, 0.308) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgb(0, 0, 0) 0%, transparent 50%),
     linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
   z-index: -1;
 }
@@ -274,7 +274,7 @@ html, body {
 }
 
 .main-title {
-  font-family: "Cinzel", serif;
+  font-family: "Papyrus", Fantasy;
   font-size: 4rem;
   font-weight: 900;
   background: linear-gradient(45deg, var(--primary-gold), var(--secondary-red));
@@ -370,7 +370,7 @@ html, body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url("imgs/20250516_201359_489\ $$1$$.png");
+  background-image: url("imgs/trees.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
