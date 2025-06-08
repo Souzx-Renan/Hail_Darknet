@@ -7,13 +7,13 @@ const GAME_CONFIG = {
   SQUAD_SIZE: 5,
   PHASES: 4,
 };
-//
+
 // ===== BANCO DE DADOS DE HERÓIS (CARTAS ORIGINAIS) =====
 const HEROES_DATABASE = [
     {
     id: 1,
     name: "Ana",
-    art: "src/imgs/ana.png",
+    art: "imgs/ana.png",
     shield: 3,
     health: 12,
     maxHealth: 12,
@@ -28,11 +28,11 @@ const HEROES_DATABASE = [
   {
     id: 2,
     name: "Gostosinho",
-    art: "src/imgs/gostozinho.png",
+    art: "imgs/gostozinho.png",
     shield: 6,
     health: 18,
     maxHealth: 18,
-    attackRange: [6, 8],
+    attackRange: [6, 9],
     ability: "Porrada: +3 de dano se estiver com vida cheia",
     description: "O brabo do time, sempre na linha de frente.",
     dialogue: "Vamo que vamo, rapaziada!",
@@ -43,7 +43,7 @@ const HEROES_DATABASE = [
   {
     id: 3,
     name: "Moreno",
-    art: "src/imgs/moreno.png",
+    art: "imgs/moreno.png",
     shield: 2,
     health: 10,
     maxHealth: 10,
@@ -58,7 +58,7 @@ const HEROES_DATABASE = [
   {
     id: 4,
     name: "Hugo",
-    art: "src/imgs/hugo.png",
+    art: "imgs/hugo.png",
     shield: 8,
     health: 16,
     maxHealth: 16,
@@ -73,7 +73,7 @@ const HEROES_DATABASE = [
   {
     id: 5,
     name: "Messias",
-    art: "src/imgs/mesias.png",
+    art: "imgs/mesias.png",
     shield: 2,
     health: 8,
     maxHealth: 8,
@@ -88,7 +88,7 @@ const HEROES_DATABASE = [
   {
     id: 6,
     name: "Erinaldo",
-    art: "src/imgs/erinaldo.png",
+    art: "imgs/erinaldo.png",
     shield: 4,
     health: 12,
     maxHealth: 12,
@@ -103,7 +103,7 @@ const HEROES_DATABASE = [
   {
     id: 7,
     name: "Camila",
-    art: "src/imgs/camila.png",
+    art: "imgs/camila.png",
     shield: 4,
     health: 10,
     maxHealth: 10,
@@ -118,7 +118,7 @@ const HEROES_DATABASE = [
   {
     id: 8,
     name: "Cidão",
-    art: "src/imgs/sidao.png",
+    art: "imgs/sidao.png",
     shield: 5,
     health: 14,
     maxHealth: 14,
@@ -137,11 +137,11 @@ const BOSSES = [
   {
     id: "boss1",
     name: "BUG",
-    art: "src/imgs/bug.jpg",
+    art: "imgs/bug.jpg",
     shield: 5,
     health: 25,
     maxHealth: 25,
-    attackRange: [2, 5],
+    attackRange: [2, 8],
     ability: "Ataque Bugado: Causa dano aleatório entre 1 e 12",
     description: "Sistema corrompido que causa caos digital.",
     dialogue: "ERRO 404... DESTRUIÇÃO ENCONTRADA!",
@@ -151,11 +151,11 @@ const BOSSES = [
   {
     id: "boss2",
     name: "Bill Infectado",
-    art: "src/imgs/Bill Infectado.png",
+    art: "imgs/Bill Infectado.png",
     shield: 6,
     health: 35,
     maxHealth: 35,
-    attackRange: [4, 8],
+    attackRange: [4, 7],
     ability: "Drenar Vida: Cura 2 de vida por dano causado",
     description: "Necromante que se alimenta da energia vital.",
     dialogue: "Sua alma será minha!",
@@ -165,11 +165,11 @@ const BOSSES = [
   {
     id: "boss3",
     name: "I.A (Datality) - Primeira Forma",
-    art: "src/imgs/I.A BOSS.jpg",
+    art: "imgs/I.A BOSS.jpg",
     shield: 8,
-    health: 40,
-    maxHealth: 40,
-    attackRange: [6, 9],
+    health: 50,
+    maxHealth: 50,
+    attackRange: [5, 9],
     ability: "Controle de Sistema: 30% chance de pular o turno do jogador",
     description: "O senhor das trevas digitais em sua forma inicial.",
     dialogue: "Você não pode me derrotar! Eu controlo tudo!",
@@ -180,11 +180,11 @@ const BOSSES = [
   {
     id: "boss4",
     name: "I.A (Datality) - Forma Final",
-    art: "src/imgs/I.A BOSS.jpg",
+    art: "imgs/I.A BOSS.jpg",
     shield: 12,
-    health: 60,
-    maxHealth: 60,
-    attackRange: [8, 10],
+    health: 80,
+    maxHealth: 80,
+    attackRange: [8, 15],
     ability:
       "Dominação Total: Controla uma carta inimiga por 1 turno + Regeneração",
     description: "A verdadeira forma do senhor das trevas digitais.",
