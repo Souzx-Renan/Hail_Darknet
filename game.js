@@ -7,7 +7,7 @@ const GAME_CONFIG = {
   SQUAD_SIZE: 5,
   PHASES: 4,
 };
-
+//
 // ===== BANCO DE DADOS DE HERÓIS (CARTAS ORIGINAIS) =====
 const HEROES_DATABASE = [
     {
