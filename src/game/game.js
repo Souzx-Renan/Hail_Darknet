@@ -13,7 +13,7 @@ const HEROES_DATABASE = [
     {
     id: 1,
     name: "Ana",
-    art: "/imgs/ana.png",
+    art: "src/imgs/ana.png",
     shield: 3,
     health: 12,
     maxHealth: 12,
@@ -28,7 +28,7 @@ const HEROES_DATABASE = [
   {
     id: 2,
     name: "Gostosinho",
-    art: "/imgs/gostozinho.png",
+    art: "src/imgs/gostozinho.png",
     shield: 6,
     health: 18,
     maxHealth: 18,
@@ -43,7 +43,7 @@ const HEROES_DATABASE = [
   {
     id: 3,
     name: "Moreno",
-    art: "/imgs/moreno.png",
+    art: "src/imgs/moreno.png",
     shield: 2,
     health: 10,
     maxHealth: 10,
@@ -58,7 +58,7 @@ const HEROES_DATABASE = [
   {
     id: 4,
     name: "Hugo",
-    art: "/imgs/hugo.png",
+    art: "src/imgs/hugo.png",
     shield: 8,
     health: 16,
     maxHealth: 16,
@@ -73,7 +73,7 @@ const HEROES_DATABASE = [
   {
     id: 5,
     name: "Messias",
-    art: "/imgs/mesias.png",
+    art: "src/imgs/mesias.png",
     shield: 2,
     health: 8,
     maxHealth: 8,
@@ -88,7 +88,7 @@ const HEROES_DATABASE = [
   {
     id: 6,
     name: "Erinaldo",
-    art: "/imgs/erinaldo.png",
+    art: "src/imgs/erinaldo.png",
     shield: 4,
     health: 12,
     maxHealth: 12,
@@ -103,7 +103,7 @@ const HEROES_DATABASE = [
   {
     id: 7,
     name: "Camila",
-    art: "/imgs/camila.png",
+    art: "src/imgs/camila.png",
     shield: 4,
     health: 10,
     maxHealth: 10,
@@ -118,7 +118,7 @@ const HEROES_DATABASE = [
   {
     id: 8,
     name: "Cidão",
-    art: "/imgs/sidao.png",
+    art: "src/imgs/sidao.png",
     shield: 5,
     health: 14,
     maxHealth: 14,
@@ -137,7 +137,7 @@ const BOSSES = [
   {
     id: "boss1",
     name: "BUG",
-    art: "/imgs/bug.jpg",
+    art: "src/imgs/bug.jpg",
     shield: 5,
     health: 25,
     maxHealth: 25,
@@ -151,7 +151,7 @@ const BOSSES = [
   {
     id: "boss2",
     name: "Bill Infectado",
-    art: "/imgs/Bill Infectado.png",
+    art: "src/imgs/Bill Infectado.png",
     shield: 6,
     health: 35,
     maxHealth: 35,
@@ -165,7 +165,7 @@ const BOSSES = [
   {
     id: "boss3",
     name: "I.A (Datality) - Primeira Forma",
-    art: "/imgs/I.A BOSS.jpg",
+    art: "src/imgs/I.A BOSS.jpg",
     shield: 5,
     health: 40,
     maxHealth: 40,
@@ -180,7 +180,7 @@ const BOSSES = [
   {
     id: "boss4",
     name: "I.A (Datality) - Forma Final",
-    art: "/imgs/I.A BOSS.jpg",
+    art: "src/imgs/I.A BOSS.jpg",
     shield: 5,
     health: 60,
     maxHealth: 60,
