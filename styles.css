@@ -1152,7 +1152,8 @@ html, body {
 .audio-controls {
   position: fixed;
   bottom: 20px;
-  left: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
   background: rgba(26, 26, 26, 0.9);
   padding: 12px;
