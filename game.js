@@ -213,8 +213,8 @@ const ACHIEVEMENTS = [
   },
   {
     id: "dark_mage_slayer",
-    name: "Caçador de Magos",
-    description: "Derrote o Mago Negro",
+    name: "Caçador de Bugs",
+    description: "Derrote o Bug",
     icon: "🔮",
     unlocked: false,
   },
