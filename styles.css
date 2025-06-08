@@ -1,6 +1,6 @@
 :root {
-  --primary-gold: #d4af37;
-  --secondary-red: #8b0000;
+  --primary-gold: #ffffff;
+  --secondary-red: #acced4;
   --accent-purple: #4a0e4e;
   --success-green: #228b22;
   --warning-orange: #ff8c00;
@@ -15,7 +15,7 @@
   --text-secondary: #d3d3d3;
   --text-muted: #808080;
 
-  --border-color: #5a3921;
+  --border-color: #9ceffa;
   --border-glow: rgba(212, 175, 55, 0.5);
 
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -257,10 +257,8 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(74, 14, 78, 0.3) 0%, transparent 50%),
-    linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background-color: #000000;
+  background-image: url(imgs/ProfessoresUnicesumar.jpg);
   z-index: -1;
 }
 
@@ -283,8 +281,8 @@ html, body {
   background-clip: text;
   margin-bottom: 1rem;
   letter-spacing: 0.1em;
-  animation: titleGlow 3s ease-in-out infinite;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+  color: black;
 }
 
 .subtitle {
@@ -474,6 +472,7 @@ html, body {
 
 /* ===== ÁREA DE BATALHA ===== */
 .battle-area {
+  background-image: url(imgs/trees.png);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -503,6 +502,7 @@ html, body {
 }
 
 .health-bar {
+  margin: 0 auto;
   width: 350px;
   height: 16px;
   background: var(--bg-tertiary);
@@ -527,18 +527,6 @@ html, body {
   font-family: "Cinzel", serif;
 }
 
-.enemy-card-slot {
-  width: 220px;
-  height: 300px;
-  border: 3px dashed var(--border-color);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(30, 30, 30, 0.8);
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
 
 .player-field {
   display: flex;
@@ -889,12 +877,15 @@ html, body {
 
 /* ===== SELEÇÃO DE ESQUADRÃO ===== */
 .squad-selection {
+  background-image: url(imgs/trees.png);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg-primary);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 2rem;
   overflow-y: auto;
 }
