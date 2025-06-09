@@ -1327,16 +1327,3 @@ html, body {
   }
 }
 
-/* Adicione isto ao final do CSS existente */
-@media (max-width: 768px) {
-  html, body {
-    overflow-x: hidden;
-    min-height: 100vh;
-    height: auto;
-  }
-  
-  .game-screen {
-    height: auto;
-    min-height: 100vh;
-  }
-}
